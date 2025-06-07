@@ -10,9 +10,9 @@ export const mockAdminUser: User = {
   role: 'admin',
 };
 
-export const mockStudentUser: User = {
+export const mockStudentUser: User = { // This specific mock student can be phased out or kept for initial testing
   email: 'aluno@academia.com',
-  name: 'Aluno Teste',
+  name: 'Aluno Teste Padrão',
   avatarUrl: 'https://picsum.photos/seed/alunoteste/40/40',
   role: 'student',
   studentId: 's_aluno01' 
@@ -91,11 +91,11 @@ export const scheduledClassesData: ScheduledClass[] = [
   { id: '5', name: 'HIIT Intenso', teacher: 'Prof. Carlos', dayOfWeek: 'Quinta-feira', classTime: '17:30', spotsFilled: 18, totalSpots: 20, observations: 'Prepare-se para suar!' },
 ];
 
-export const studentsData: Student[] = [
+export let studentsData: Student[] = [ // Changed to let for direct modification
   { 
     id: 's_aluno01', 
     photoUrl: 'https://picsum.photos/seed/alunoteste/60/60', 
-    name: 'Aluno Teste', 
+    name: 'Aluno Teste Padrão', 
     cpf: '100.000.000-01', 
     phone: '(11) 90000-0001', 
     email: 'aluno@academia.com', 

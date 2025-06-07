@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../App';
-import { mockAdminUser, mockStudentUser } from '../data/mockData'; // Import both mock users
+import { mockAdminUser, studentsData } from '../data/mockData'; // Import studentsData
+import { User } from '../types';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,15 +15,32 @@ const LoginPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    // Check Admin Login
     if (email === mockAdminUser.email && password === '1234') {
       login(mockAdminUser);
-      navigate('/dashboard'); // Admin dashboard
-    } else if (email === mockStudentUser.email && password === '1234') {
-      login(mockStudentUser);
-      navigate('/aluno/dashboard'); // Student dashboard
-    } else {
-      setError('E-mail ou senha inválidos.');
+      navigate('/dashboard'); 
+      return;
     }
+
+    // Check Student Login
+    // In a real app, password check would be against a hash, not '1234'
+    const studentUser = studentsData.find(student => student.email === email);
+
+    if (studentUser && password === '1234') { // Using '1234' as the mock password for all students
+      const userForContext: User = {
+        email: studentUser.email,
+        name: studentUser.name,
+        avatarUrl: studentUser.photoUrl,
+        role: 'student',
+        studentId: studentUser.id, // student.id is the unique identifier
+      };
+      login(userForContext);
+      navigate('/aluno/dashboard'); 
+      return;
+    }
+    
+    setError('E-mail ou senha inválidos.');
   };
 
   return (
@@ -76,10 +94,10 @@ const LoginPage: React.FC = () => {
             Email: <code className="text-orange-600 dark:text-orange-400">admin@academia.com</code><br/>
             Senha: <code className="text-orange-600 dark:text-orange-400">1234</code>
           </p>
-          <p>
-            <strong>Login Aluno:</strong><br />
-            Email: <code className="text-orange-600 dark:text-orange-400">aluno@academia.com</code><br/>
-            Senha: <code className="text-orange-600 dark:text-orange-400">1234</code>
+           <p className="text-gray-500 dark:text-gray-400">
+            <strong>Para Alunos Cadastrados:</strong><br />
+            Use o e-mail fornecido no cadastro.<br/>
+            Senha padrão para todos (simulação): <code className="text-orange-600 dark:text-orange-400">1234</code>
           </p>
         </div>
       </div>
