@@ -6,7 +6,7 @@ import { IconSearch, IconPlus, IconEdit, IconTrash } from '../constants.tsx';
 import Modal from '../components/Modal';
 import TagInput from '../components/TagInput';
 import { Controller, useForm, FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
-import { zodResolver } from 'https://esm.sh/@hookform/resolvers/zod';
+import { zodResolver } from 'hookform-resolvers-zod'; 
 import { z } from 'zod'; 
 import { studentFormSchema } from '../schemas/studentSchema'; 
 import { maskCPF, maskPhone } from '../utils/maskUtils'; 
