@@ -33,16 +33,16 @@ const ThemeToggleButton: React.FC = () => {
       onClick={toggleTheme}
       aria-label="Toggle theme"
       title={theme === 'light' ? 'Mudar para tema escuro' : 'Mudar para tema claro'}
-      className="fixed bottom-5 right-5 z-50 p-3 rounded-full bg-light-bg-card dark:bg-dark-card shadow-lg 
+      className="fixed bottom-4 right-4 sm:bottom-5 sm:right-5 z-[60] p-2.5 sm:p-3 rounded-full bg-light-bg-card dark:bg-dark-card shadow-lg 
                  text-brand-orange dark:text-orange-400 
                  hover:bg-gray-100 dark:hover:bg-gray-700 
                  border border-light-border dark:border-dark-border
                  transition-all duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brand-orange"
     >
       {theme === 'light' ? (
-        <IconMoon className="w-6 h-6" />
+        <IconMoon className="w-5 h-5 sm:w-6 sm:h-6" />
       ) : (
-        <IconSun className="w-6 h-6" />
+        <IconSun className="w-5 h-5 sm:w-6 sm:h-6" />
       )}
     </button>
   );

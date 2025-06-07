@@ -14,7 +14,7 @@ import AdminSchedulePage from './pages/SchedulePage';
 import AdminSidebar from './components/Sidebar';
 import AdminHeader from './components/Header';
 
-// Student imports (new files to be created)
+// Student imports
 import StudentMainLayout from './student/layouts/StudentMainLayout'; 
 import StudentDashboardPage from './student/pages/StudentDashboardPage';
 import StudentMyTrainingsPage from './student/pages/StudentMyTrainingsPage';
@@ -27,6 +27,8 @@ interface AuthContextType {
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
+  isMobileSidebarOpen: boolean;
+  toggleMobileSidebar: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -42,6 +44,7 @@ export const useAuth = (): AuthContextType => {
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -56,15 +59,23 @@ const App: React.FC = () => {
   const login = (loggedInUser: User) => {
     setIsAuthenticated(true);
     setUser(loggedInUser);
+    setIsMobileSidebarOpen(false); // Close sidebar on login
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
-    // No explicit navigate here, will be handled by route guards or redirects
+    setIsMobileSidebarOpen(false); // Close sidebar on logout
+  };
+
+  const toggleMobileSidebar = () => {
+    setIsMobileSidebarOpen(prev => !prev);
   };
   
-  const authContextValue = useMemo(() => ({ isAuthenticated, user, login, logout }), [isAuthenticated, user]);
+  const authContextValue = useMemo(
+    () => ({ isAuthenticated, user, login, logout, isMobileSidebarOpen, toggleMobileSidebar }),
+    [isAuthenticated, user, isMobileSidebarOpen]
+  );
 
   if (!isAuthenticated) {
     return (
@@ -83,11 +94,12 @@ const App: React.FC = () => {
     <AuthContext.Provider value={authContextValue}>
       <ThemeToggleButton />
       {user?.role === 'admin' && (
-        <div className="flex h-screen bg-light-bg-main text-dark-text dark:bg-dark-bg dark:text-light-text">
+        <div className="flex h-screen bg-light-bg-main text-dark-text dark:bg-dark-bg dark:text-light-text overflow-hidden">
           <AdminSidebar />
+          {isMobileSidebarOpen && <div className="fixed inset-0 z-20 bg-black/50 md:hidden" onClick={toggleMobileSidebar}></div>}
           <div className="flex-1 flex flex-col overflow-hidden">
             <AdminHeader />
-            <main className="flex-1 overflow-x-hidden overflow-y-auto bg-light-bg-main dark:bg-dark-bg p-6 md:p-8">
+            <main className={`flex-1 overflow-x-hidden overflow-y-auto bg-light-bg-main dark:bg-dark-bg p-4 sm:p-6 md:p-8 ${isMobileSidebarOpen ? 'md:ml-64' : ''}`}>
               <Routes>
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="/dashboard" element={<AdminDashboardPage />} />
@@ -102,7 +114,7 @@ const App: React.FC = () => {
         </div>
       )}
       {user?.role === 'student' && (
-        <StudentMainLayout>
+         <StudentMainLayout>
           <Routes>
             <Route path="/" element={<Navigate to="/aluno/dashboard" />} />
             <Route path="/aluno/dashboard" element={<StudentDashboardPage />} />

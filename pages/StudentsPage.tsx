@@ -22,7 +22,7 @@ const StudentRow: React.FC<{ student: Student; onEdit: (student: Student) => voi
       <td className="p-3 whitespace-nowrap">
         <img src={student.photoUrl} alt={student.name} className="w-10 h-10 rounded-full object-cover" />
       </td>
-      <td className="p-3"> 
+      <td className="p-3 min-w-[200px]"> 
         <div className="font-medium text-dark-text dark:text-light-text">{student.name}</div>
         <div className="flex flex-wrap gap-1 mt-1">
           {student.objectives.slice(0, 3).map(objective => ( 
@@ -44,7 +44,7 @@ const StudentRow: React.FC<{ student: Student; onEdit: (student: Student) => voi
           {student.paymentStatus}
         </span>
       </td>
-      <td className="p-3 whitespace-nowrap space-x-2">
+      <td className="p-3 whitespace-nowrap space-x-1 sm:space-x-2">
         <button onClick={() => onEdit(student)} className="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 p-1" title="Editar Aluno">
           <IconEdit className="w-5 h-5" />
         </button>
@@ -130,11 +130,11 @@ const StudentsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <h2 className="text-2xl md:text-3xl font-semibold text-dark-text dark:text-light-text">Gerenciamento de Alunos</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-dark-text dark:text-light-text">Gerenciamento de Alunos</h2>
         <button 
           onClick={handleAddNewStudent} 
-          className="bg-brand-orange hover:bg-orange-600 text-white font-semibold py-2.5 px-5 rounded-lg flex items-center space-x-2 transition-colors shadow-sm hover:shadow-md"
+          className="w-full sm:w-auto bg-brand-orange hover:bg-orange-600 text-white font-semibold py-2.5 px-5 rounded-lg flex items-center justify-center space-x-2 transition-colors shadow-sm hover:shadow-md"
         >
           <IconPlus className="w-5 h-5" />
           <span>Novo Aluno</span>
@@ -154,30 +154,32 @@ const StudentsPage: React.FC = () => {
         />
       </div>
 
-      <div className="bg-light-bg-card dark:bg-dark-card shadow-lg rounded-xl overflow-x-auto">
-        <table className="w-full min-w-[700px]">
-          <thead className="bg-gray-50 dark:bg-gray-800/50 border-b border-light-border dark:border-dark-border">
-            <tr>
-              <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Foto</th>
-              <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Nome / Objetivos</th>
-              <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">CPF</th>
-              <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Telefone</th>
-              <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Status Pag.</th>
-              <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Ações</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-light-border dark:divide-dark-border">
-            {filteredStudents.length > 0 ? (
-              filteredStudents.map(student => (
-                <StudentRow key={student.id} student={student} onEdit={handleOpenEditModal} onDelete={handleDeleteStudent} />
-              ))
-            ) : (
+      <div className="bg-light-bg-card dark:bg-dark-card shadow-lg rounded-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[700px] sm:min-w-full">
+            <thead className="bg-gray-50 dark:bg-gray-800/50 border-b border-light-border dark:border-dark-border">
               <tr>
-                <td colSpan={6} className="text-center p-6 text-medium-text-light dark:text-medium-text">Nenhum aluno encontrado.</td>
+                <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Foto</th>
+                <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Nome / Objetivos</th>
+                <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider hidden sm:table-cell">CPF</th>
+                <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider hidden md:table-cell">Telefone</th>
+                <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Status Pag.</th>
+                <th className="p-3 text-left text-xs font-semibold text-medium-text-light dark:text-medium-text uppercase tracking-wider">Ações</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-light-border dark:divide-dark-border">
+              {filteredStudents.length > 0 ? (
+                filteredStudents.map(student => (
+                  <StudentRow key={student.id} student={student} onEdit={handleOpenEditModal} onDelete={handleDeleteStudent} />
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="text-center p-6 text-medium-text-light dark:text-medium-text">Nenhum aluno encontrado.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <Modal isOpen={isEditModalOpen} onClose={handleCloseEditModal} title={'Editar Aluno'}>
@@ -246,9 +248,9 @@ const StudentsPage: React.FC = () => {
             {editErrors.observations?.message && typeof editErrors.observations.message === 'string' && <p className="text-red-500 dark:text-red-400 text-xs mt-1">{editErrors.observations.message}</p>}
           </div>
 
-          <div className="flex justify-end space-x-3 pt-4">
-            <button type="button" onClick={handleCloseEditModal} className="py-2 px-4 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition">Cancelar</button>
-            <button type="submit" className="py-2 px-4 bg-brand-orange hover:bg-orange-600 text-white rounded-lg transition">Salvar Alterações</button>
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4">
+            <button type="button" onClick={handleCloseEditModal} className="w-full sm:w-auto py-2 px-4 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition">Cancelar</button>
+            <button type="submit" className="w-full sm:w-auto py-2 px-4 bg-brand-orange hover:bg-orange-600 text-white rounded-lg transition">Salvar Alterações</button>
           </div>
         </form>
       </Modal>

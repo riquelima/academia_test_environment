@@ -57,7 +57,7 @@ const TrainingCard: React.FC<{
       onKeyDown={handleCardKeyDown}
     >
       <div 
-        className="relative h-48 w-full image-area-clickable"
+        className="relative h-40 sm:h-48 w-full image-area-clickable"
         onClick={(e) => handleButtonClick(e, () => onViewExercises(training))}
       >
         <img 
@@ -66,9 +66,9 @@ const TrainingCard: React.FC<{
           className="absolute inset-0 w-full h-full object-cover" 
           onError={handleImageError}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-4 flex flex-col justify-end">
-          <h3 className="text-lg font-semibold text-white mb-1 line-clamp-2">{training.name}</h3>
-          <div className="flex items-center space-x-3 text-xs text-gray-200">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-3 sm:p-4 flex flex-col justify-end">
+          <h3 className="text-md sm:text-lg font-semibold text-white mb-1 line-clamp-2">{training.name}</h3>
+          <div className="flex items-center space-x-2 sm:space-x-3 text-xs text-gray-200">
             {training.duration && (
               <span className="flex items-center"><IconClock className="w-3.5 h-3.5 mr-1" /> {training.duration}</span>
             )}
@@ -80,7 +80,7 @@ const TrainingCard: React.FC<{
         </div>
       </div>
 
-      <div className="p-5 flex-grow flex flex-col justify-between">
+      <div className="p-4 sm:p-5 flex-grow flex flex-col justify-between">
         <div> 
           <div className="mb-3">
             <p className="text-xs text-medium-text-light dark:text-medium-text flex items-center mb-0.5">
@@ -270,17 +270,20 @@ const TrainingsPage: React.FC = () => {
   }, [activeSplitId, formData.splits]);
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <h2 className="text-2xl md:text-3xl font-semibold text-dark-text dark:text-light-text flex items-center">
-          <IconWeightLiftingUp className="w-8 h-8 mr-3 text-brand-orange" /> Gerenciamento de Treinos
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-dark-text dark:text-light-text flex items-center">
+          <IconWeightLiftingUp className="w-7 h-7 sm:w-8 sm:h-8 mr-2 sm:mr-3 text-brand-orange" /> Gerenciamento de Treinos
         </h2>
-        <button onClick={() => handleOpenFormModal()} className="bg-brand-orange hover:bg-orange-600 text-white font-semibold py-2.5 px-5 rounded-lg flex items-center space-x-2 transition-colors shadow-sm hover:shadow-md">
+        <button 
+            onClick={() => handleOpenFormModal()} 
+            className="w-full sm:w-auto bg-brand-orange hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-5 rounded-lg flex items-center justify-center space-x-2 transition-colors shadow-sm hover:shadow-md"
+        >
           <IconPlus className="w-5 h-5" /> <span>Novo Treino</span>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
         {trainings.length > 0 ? (
           trainings.map(training => (
             <TrainingCard key={training.id} training={training} onEdit={handleOpenFormModal} onDelete={handleDeleteTraining} onAssociate={handleAssociateStudents} onViewExercises={handleOpenViewModal} />
@@ -316,19 +319,19 @@ const TrainingsPage: React.FC = () => {
           
           <div className="space-y-3 pt-3 border-t border-light-border dark:border-dark-border">
             <h4 className="text-base font-semibold text-dark-text dark:text-light-text">Divisões do Treino</h4>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <input type="text" value={newSplitNameInput} onChange={(e) => setNewSplitNameInput(e.target.value)} placeholder="Nome da Divisão (Ex: Treino A)" className={`${inputBaseClassesModal} flex-grow`}/>
-              <button type="button" onClick={handleAddSplit} className="p-2 bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-md text-xs font-medium shadow-sm">+ Adicionar</button>
+              <button type="button" onClick={handleAddSplit} className="w-full sm:w-auto p-2 bg-blue-500 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-md text-xs font-medium shadow-sm">+ Adicionar</button>
             </div>
             
             {formData.splits && formData.splits.length > 0 && (
-              <div className="flex space-x-1 border-b border-light-border dark:border-dark-border pb-0">
+              <div className="flex flex-wrap space-x-1 border-b border-light-border dark:border-dark-border pb-0">
                 {formData.splits.map(split => (
                   <button
                     key={split.id}
                     type="button"
                     onClick={() => setActiveSplitId(split.id)}
-                    className={`py-2 px-4 text-xs font-medium rounded-t-md focus:outline-none transition-colors
+                    className={`py-2 px-3 sm:px-4 text-xs font-medium rounded-t-md focus:outline-none transition-colors mb-[-1px]
                       ${activeSplitId === split.id 
                         ? 'bg-brand-orange text-white border-b-2 border-brand-orange' 
                         : 'text-medium-text-light dark:text-medium-text hover:text-brand-orange dark:hover:text-orange-400 hover:bg-orange-500/10 dark:hover:bg-orange-500/20 border-b-2 border-transparent'}`}
@@ -370,9 +373,9 @@ const TrainingsPage: React.FC = () => {
             </div>
           )}
           
-          <div className="flex justify-end space-x-3 pt-4 border-t border-light-border dark:border-dark-border">
-            <button type="button" onClick={handleCloseFormModal} className="py-2 px-4 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition text-xs">Cancelar</button>
-            <button type="submit" className="py-2 px-4 bg-brand-orange hover:bg-orange-600 text-white rounded-lg font-medium transition text-xs shadow-sm hover:shadow-md">Salvar Treino</button>
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4 border-t border-light-border dark:border-dark-border">
+            <button type="button" onClick={handleCloseFormModal} className="w-full sm:w-auto py-2 px-4 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition text-xs">Cancelar</button>
+            <button type="submit" className="w-full sm:w-auto py-2 px-4 bg-brand-orange hover:bg-orange-600 text-white rounded-lg font-medium transition text-xs shadow-sm hover:shadow-md">Salvar Treino</button>
           </div>
         </form>
       </Modal>
@@ -380,6 +383,16 @@ const TrainingsPage: React.FC = () => {
       <Modal isOpen={isViewModalOpen} onClose={handleCloseViewModal} title={viewingTraining ? `Detalhes: ${viewingTraining.name}` : 'Detalhes do Treino'}>
         {viewingTraining && (
           <div className="space-y-4 text-sm">
+            <div className="relative h-40 w-full rounded-lg overflow-hidden mb-3">
+                <img 
+                    src={viewingTraining.imageUrl || 'https://source.unsplash.com/500x300/?fitness,gym'} 
+                    alt={viewingTraining.name} 
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent p-3 flex flex-col justify-end">
+                    <h3 className="text-md font-semibold text-white">{viewingTraining.name}</h3>
+                </div>
+            </div>
             <div className="mb-1">
                 <strong className="text-medium-text-light dark:text-medium-text">Objetivos:</strong>
                 <div className="flex flex-wrap gap-1 mt-1">

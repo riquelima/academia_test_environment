@@ -67,10 +67,10 @@ const AlunoForm: React.FC<AlunoFormProps> = ({ onSubmit, onCancel, isSubmitting 
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="flex flex-col items-center space-y-3">
         {avatarPreview || currentAvatar ? (
-          <img src={avatarPreview || currentAvatar} alt="Avatar Preview" className="w-32 h-32 rounded-full object-cover border-2 border-brand-orange dark:border-orange-600" />
+          <img src={avatarPreview || currentAvatar} alt="Avatar Preview" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-2 border-brand-orange dark:border-orange-600" />
         ) : (
-          <div className="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center border-2 border-light-border dark:border-dark-border">
-            <IconUserCircle className="w-16 h-16 text-gray-400 dark:text-gray-500" />
+          <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center border-2 border-light-border dark:border-dark-border">
+            <IconUserCircle className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 dark:text-gray-500" />
           </div>
         )}
         <input
@@ -178,10 +178,7 @@ const AlunoForm: React.FC<AlunoFormProps> = ({ onSubmit, onCancel, isSubmitting 
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
-        <button type="button" onClick={handleCancelClick} disabled={isSubmitting} className="w-full sm:w-auto py-2.5 px-6 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50">
-          Cancelar
-        </button>
+      <div className="flex flex-col-reverse sm:flex-row justify-end space-y-3 space-y-reverse sm:space-y-0 sm:space-x-4 pt-4">
         <button type="submit" disabled={isSubmitting} className="w-full sm:w-auto bg-brand-orange text-white py-2.5 px-6 rounded-lg font-semibold hover:bg-orange-600 dark:hover:bg-orange-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 disabled:opacity-50 flex items-center justify-center">
           {isSubmitting ? (
             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -189,6 +186,9 @@ const AlunoForm: React.FC<AlunoFormProps> = ({ onSubmit, onCancel, isSubmitting 
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           ) : 'Salvar Aluno'}
+        </button>
+        <button type="button" onClick={handleCancelClick} disabled={isSubmitting} className="w-full sm:w-auto py-2.5 px-6 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 disabled:opacity-50">
+          Cancelar
         </button>
       </div>
     </form>

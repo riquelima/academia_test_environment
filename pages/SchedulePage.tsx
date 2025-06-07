@@ -49,35 +49,35 @@ const SchedulePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <h2 className="text-2xl md:text-3xl font-semibold text-dark-text dark:text-light-text flex items-center">
-          <IconCalendar className="w-8 h-8 mr-3 text-brand-orange" />
+    <div className="space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-dark-text dark:text-light-text flex items-center">
+          <IconCalendar className="w-7 h-7 sm:w-8 sm:h-8 mr-2 sm:mr-3 text-brand-orange" />
           Agendamento de Aulas
         </h2>
         <button 
           onClick={handleOpenModal}
-          className="bg-brand-orange hover:bg-orange-600 text-white font-semibold py-2.5 px-5 rounded-lg flex items-center space-x-2 transition-colors shadow-sm hover:shadow-md"
+          className="w-full sm:w-auto bg-brand-orange hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-5 rounded-lg flex items-center justify-center space-x-2 transition-colors shadow-sm hover:shadow-md"
         >
           <IconPlus className="w-5 h-5" />
           <span>Nova Aula</span>
         </button>
       </div>
       
-      <div className="bg-light-bg-card dark:bg-dark-card p-6 rounded-xl shadow-lg">
-        <h3 className="text-lg font-semibold text-dark-text dark:text-light-text mb-2">Agenda - {new Date().toLocaleString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
-        <p className="text-medium-text-light dark:text-medium-text mb-6">
+      <div className="bg-light-bg-card dark:bg-dark-card p-4 sm:p-6 rounded-xl shadow-lg">
+        <h3 className="text-lg sm:text-xl font-semibold text-dark-text dark:text-light-text mb-2">Agenda - {new Date().toLocaleString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
+        <p className="text-sm text-medium-text-light dark:text-medium-text mb-4 sm:mb-6">
           A funcionalidade de calendário visual para agendamento de aulas está em desenvolvimento. 
           Aqui você poderá marcar aulas, escolher professor, horário, alunos inscritos, confirmar presenças e enviar lembretes.
         </p>
-        <div className="bg-gray-100 dark:bg-dark-border p-8 rounded-lg text-center text-medium-text-light dark:text-medium-text border border-light-border dark:border-gray-700">
+        <div className="bg-gray-100 dark:bg-dark-border p-6 sm:p-8 rounded-lg text-center text-medium-text-light dark:text-medium-text border border-light-border dark:border-gray-700">
           Visualização de Calendário (Em Breve)
         </div>
       </div>
 
       <div>
-        <h3 className="text-xl font-semibold text-dark-text dark:text-light-text mb-4">Próximas Aulas Agendadas</h3>
-         <div className="bg-light-bg-card dark:bg-dark-card p-2 md:p-4 rounded-xl shadow-lg">
+        <h3 className="text-lg sm:text-xl font-semibold text-dark-text dark:text-light-text mb-3 sm:mb-4">Próximas Aulas Agendadas</h3>
+         <div className="bg-light-bg-card dark:bg-dark-card p-2 sm:p-4 rounded-xl shadow-lg">
             {scheduledClasses.length > 0 ? (
             scheduledClasses.map((sClass) => (
                 <ScheduledClassItem key={sClass.id} sClass={sClass} />
@@ -99,7 +99,7 @@ const SchedulePage: React.FC = () => {
             <input type="text" name="teacher" id="teacher" value={formData.teacher || ''} onChange={handleFormChange} required className={inputBaseClassesModal}/>
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="dayOfWeek" className="block text-sm font-medium text-medium-text-light dark:text-medium-text">Dia da Semana</label>
               <select name="dayOfWeek" id="dayOfWeek" value={formData.dayOfWeek || daysOfWeek[0]} onChange={handleFormChange} required className={inputBaseClassesModal}>
@@ -112,7 +112,7 @@ const SchedulePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="spotsFilled" className="block text-sm font-medium text-medium-text-light dark:text-medium-text">Vagas Preenchidas</label>
               <input type="number" name="spotsFilled" id="spotsFilled" value={formData.spotsFilled || 0} onChange={handleFormChange} min="0" className={inputBaseClassesModal}/>
@@ -127,9 +127,9 @@ const SchedulePage: React.FC = () => {
             <textarea name="observations" id="observations" value={formData.observations || ''} onChange={handleFormChange} rows={2} className={inputBaseClassesModal} placeholder="Alguma observação sobre a aula? (opcional)"></textarea>
           </div>
 
-          <div className="flex justify-end space-x-3 pt-4">
-            <button type="button" onClick={handleCloseModal} className="py-2 px-4 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition">Cancelar</button>
-            <button type="submit" className="py-2 px-4 bg-brand-orange hover:bg-orange-600 text-white rounded-lg font-medium transition">Salvar Aula</button>
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4">
+            <button type="button" onClick={handleCloseModal} className="w-full sm:w-auto py-2 px-4 border border-light-border dark:border-dark-border rounded-lg text-medium-text-light dark:text-medium-text hover:bg-gray-100 dark:hover:bg-gray-700 transition">Cancelar</button>
+            <button type="submit" className="w-full sm:w-auto py-2 px-4 bg-brand-orange hover:bg-orange-600 text-white rounded-lg font-medium transition">Salvar Aula</button>
           </div>
         </form>
       </Modal>
