@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from 'hookform-resolvers-zod'; 
+import { zodResolver } from '@hookform/resolvers/zod'; 
 import { studentFormSchema, StudentFormData } from '../schemas/studentSchema';
 import { maskCPF, maskPhone } from '../utils/maskUtils';
 import { IconCalendar, IconUserCircle, IconPlus } from '../constants.tsx';
