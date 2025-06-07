@@ -1,15 +1,26 @@
+
 import React, { useState, createContext, useContext, useMemo, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import StudentsPage from './pages/StudentsPage';
-import AddStudentPage from './pages/AddStudentPage'; // Import the new page
-import TrainingsPage from './pages/TrainingsPage';
-import SchedulePage from './pages/SchedulePage';
-import Sidebar from './components/Sidebar';
-import Header from './components/Header';
-import ThemeToggleButton from './components/ThemeToggleButton'; // Import the new component
+import ThemeToggleButton from './components/ThemeToggleButton';
 import { User } from './types';
+
+// Admin imports
+import AdminDashboardPage from './pages/DashboardPage';
+import AdminStudentsPage from './pages/StudentsPage';
+import AdminAddStudentPage from './pages/AddStudentPage';
+import AdminTrainingsPage from './pages/TrainingsPage';
+import AdminSchedulePage from './pages/SchedulePage';
+import AdminSidebar from './components/Sidebar';
+import AdminHeader from './components/Header';
+
+// Student imports (new files to be created)
+import StudentMainLayout from './student/layouts/StudentMainLayout'; 
+import StudentDashboardPage from './student/pages/StudentDashboardPage';
+import StudentMyTrainingsPage from './student/pages/StudentMyTrainingsPage';
+import StudentMyClassesPage from './student/pages/StudentMyClassesPage';
+import StudentPerformancePage from './student/pages/StudentPerformancePage';
+
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -32,18 +43,15 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
-  // This useEffect ensures the 'dark' class is applied to <html> on initial load
-  // based on localStorage, complementing the ThemeToggleButton's own logic.
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     const htmlElement = document.documentElement;
     if (savedTheme === 'dark') {
       htmlElement.classList.add('dark');
     } else {
-      htmlElement.classList.remove('dark'); // Defaults to light
+      htmlElement.classList.remove('dark');
     }
   }, []);
-
 
   const login = (loggedInUser: User) => {
     setIsAuthenticated(true);
@@ -53,15 +61,14 @@ const App: React.FC = () => {
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
+    // No explicit navigate here, will be handled by route guards or redirects
   };
   
   const authContextValue = useMemo(() => ({ isAuthenticated, user, login, logout }), [isAuthenticated, user]);
 
-
   if (!isAuthenticated) {
     return (
       <AuthContext.Provider value={authContextValue}>
-        {/* Theme toggle button can be shown on login page too by placing it here */}
         <ThemeToggleButton /> 
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -71,26 +78,41 @@ const App: React.FC = () => {
     );
   }
 
+  // Render layout based on user role
   return (
     <AuthContext.Provider value={authContextValue}>
-      <div className="flex h-screen bg-light-bg-main text-dark-text dark:bg-dark-bg dark:text-light-text">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header />
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-light-bg-main dark:bg-dark-bg p-6 md:p-8">
-            <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/alunos" element={<StudentsPage />} />
-              <Route path="/alunos/novo" element={<AddStudentPage />} /> 
-              <Route path="/treinos" element={<TrainingsPage />} />
-              <Route path="/agenda" element={<SchedulePage />} />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
-            </Routes>
-          </main>
+      <ThemeToggleButton />
+      {user?.role === 'admin' && (
+        <div className="flex h-screen bg-light-bg-main text-dark-text dark:bg-dark-bg dark:text-light-text">
+          <AdminSidebar />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <AdminHeader />
+            <main className="flex-1 overflow-x-hidden overflow-y-auto bg-light-bg-main dark:bg-dark-bg p-6 md:p-8">
+              <Routes>
+                <Route path="/" element={<Navigate to="/dashboard" />} />
+                <Route path="/dashboard" element={<AdminDashboardPage />} />
+                <Route path="/alunos" element={<AdminStudentsPage />} />
+                <Route path="/alunos/novo" element={<AdminAddStudentPage />} /> 
+                <Route path="/treinos" element={<AdminTrainingsPage />} />
+                <Route path="/agenda" element={<AdminSchedulePage />} />
+                <Route path="*" element={<Navigate to="/dashboard" />} />
+              </Routes>
+            </main>
+          </div>
         </div>
-        <ThemeToggleButton /> {/* Theme toggle button for authenticated app */}
-      </div>
+      )}
+      {user?.role === 'student' && (
+        <StudentMainLayout>
+          <Routes>
+            <Route path="/" element={<Navigate to="/aluno/dashboard" />} />
+            <Route path="/aluno/dashboard" element={<StudentDashboardPage />} />
+            <Route path="/aluno/meus-treinos" element={<StudentMyTrainingsPage />} />
+            <Route path="/aluno/minhas-aulas" element={<StudentMyClassesPage />} />
+            <Route path="/aluno/meu-desempenho" element={<StudentPerformancePage />} />
+            <Route path="*" element={<Navigate to="/aluno/dashboard" />} />
+          </Routes>
+        </StudentMainLayout>
+      )}
     </AuthContext.Provider>
   );
 };

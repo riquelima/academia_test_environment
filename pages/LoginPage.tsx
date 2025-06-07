@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../App';
-import { mockUser } from '../data/mockData';
+import { mockAdminUser, mockStudentUser } from '../data/mockData'; // Import both mock users
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +14,12 @@ const LoginPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (email === 'admin@academia.com' && password === '1234') {
-      login(mockUser);
-      navigate('/dashboard');
+    if (email === mockAdminUser.email && password === '1234') {
+      login(mockAdminUser);
+      navigate('/dashboard'); // Admin dashboard
+    } else if (email === mockStudentUser.email && password === '1234') {
+      login(mockStudentUser);
+      navigate('/aluno/dashboard'); // Student dashboard
     } else {
       setError('E-mail ou senha inválidos.');
     }
@@ -66,11 +70,18 @@ const LoginPage: React.FC = () => {
             Entrar
           </button>
         </form>
-        <p className="mt-8 text-xs text-center text-medium-text-light dark:text-medium-text bg-gray-100 dark:bg-dark-border p-3 rounded-md">
-          <strong>Senha de teste:</strong><br />
-          Email: <code className="text-orange-600 dark:text-orange-400">admin@academia.com</code><br/>
-          Senha: <code className="text-orange-600 dark:text-orange-400">1234</code>
-        </p>
+        <div className="mt-8 text-xs text-center text-medium-text-light dark:text-medium-text bg-gray-100 dark:bg-dark-border p-3 rounded-md space-y-1">
+          <p>
+            <strong>Login Admin:</strong><br />
+            Email: <code className="text-orange-600 dark:text-orange-400">admin@academia.com</code><br/>
+            Senha: <code className="text-orange-600 dark:text-orange-400">1234</code>
+          </p>
+          <p>
+            <strong>Login Aluno:</strong><br />
+            Email: <code className="text-orange-600 dark:text-orange-400">aluno@academia.com</code><br/>
+            Senha: <code className="text-orange-600 dark:text-orange-400">1234</code>
+          </p>
+        </div>
       </div>
     </div>
   );

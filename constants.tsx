@@ -12,18 +12,32 @@ export const IconDashboard = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const IconHome = (props: React.SVGProps<SVGSVGElement>) => ( // Added for general dashboard
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+  </svg>
+);
+
 export const IconUsers = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
   </svg>
 );
 
-export const IconWeightLiftingUp = (props: React.SVGProps<SVGSVGElement>) => (
+export const IconWeightLiftingUp = (props: React.SVGProps<SVGSVGElement>) => ( // Can be used for "Meus Treinos"
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
         <path d="M5 9h2.5v6H5V9zm5.5 0H12v6h-1.5V9zm4 0h2.5v6H15V9z"/>
         <path d="M19.5 6.5c-1.38 0-2.5 1.12-2.5 2.5h-10c0-1.38-1.12-2.5-2.5-2.5S2 7.62 2 9v1c0 .55.45 1 1 1h2.5c.41 0 .75-.34.75-.75V9.5h1.5v.75c0 .41.34.75.75.75h1.5c.41 0 .75-.34.75-.75V9.5h1.5v.75c0 .41.34.75.75.75h2.5c.55 0 1-.45 1-1V9c0-1.38-1.12-2.5-2.5-2.5zM12 5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-8.5 9.25c0 .41.34.75.75.75h1.5v3.25c0 .97.78 1.75 1.75 1.75h1.5c.97 0 1.75-.78 1.75-1.75V15h1v4.25c0 .97.78 1.75 1.75 1.75h1.5c.97 0 1.75-.78 1.75-1.75V15h1.5c.41 0 .75-.34.75-.75s-.34-.75-.75-.75H3.75c-.41 0-.75.34-.75.75z"/>
     </svg>
 );
+
+export const IconYogaMat = (props: React.SVGProps<SVGSVGElement>) => ( // For "Meus Treinos" if specific
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path d="M4 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h.5c.34 0 .65-.17.83-.45l1.67-2.5c.39-.58 1.04-.95 1.75-.95h6.5c.71 0 1.36.37 1.75.95l1.67 2.5c.18.28.49.45.83.45H20c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2H4zm0 2h16v13.36l-1.5-2.25c-.59-.88-1.57-1.41-2.63-1.41H8.13c-1.05 0-2.04.53-2.63 1.41L4 17.36V4z"/>
+        <path d="M5 5h2v2H5zm0 4h2v2H5zm0 4h2v2H5zm12-8h2v2h-2zm0 4h2v2h-2z"/>
+    </svg>
+);
+
 
 export const IconDumbbell = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -48,6 +62,13 @@ export const IconTrendingUp = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z" />
   </svg>
 );
+
+export const IconChartPie = (props: React.SVGProps<SVGSVGElement>) => ( // For "Meu Desempenho"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+        <path d="M11 2v20c-5.07-.5-9-4.79-9-10s3.93-9.5 9-10zm2.03 0v8.99H22c-.47-4.74-4.24-8.52-8.97-8.99zm0 11.01V22c4.74-.47 8.51-4.24 8.97-8.99h-8.97z"/>
+    </svg>
+);
+
 
 export const IconTrendingDown = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
@@ -163,5 +184,17 @@ export const IconSun = (props: React.SVGProps<SVGSVGElement>) => (
 export const IconMoon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+  </svg>
+);
+
+export const IconChevronRight = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+  </svg>
+);
+
+export const IconInfo = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
   </svg>
 );

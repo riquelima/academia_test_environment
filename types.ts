@@ -5,6 +5,8 @@ export interface User {
   email: string;
   name: string;
   avatarUrl?: string;
+  role: 'admin' | 'student'; // Added role
+  studentId?: string; // Added studentId, optional for admin, required for student
 }
 
 export interface StatCardData {
@@ -27,6 +29,18 @@ export interface ScheduledClass {
   observations?: string; 
 }
 
+// New type for classes available for scheduling by students
+export interface AvailableClass {
+  id: string;
+  name: string;
+  teacher: string;
+  description: string;
+  capacity: number;
+  duration: string; // e.g., "60 min"
+  dayOfWeek?: string; // Optional, if it's a recurring class with a fixed day
+  classTime?: string; // Optional
+}
+
 export interface Student {
   id: string;
   photoUrl: string; 
@@ -38,6 +52,9 @@ export interface Student {
   objectives: string[]; 
   paymentStatus: 'Em dia' | 'Atrasado' | 'Pendente'; 
   observations?: string; 
+  assignedTrainingIds?: string[]; // IDs of trainings assigned to this student
+  enrolledClassIds?: string[]; // IDs of classes this student is enrolled in
+  currentTrainingId?: string; // Optional: ID of the current active training
 }
 
 export enum TrainingObjective {
@@ -66,13 +83,12 @@ export interface TrainingSplit {
 export interface Training {
   id: string;
   name: string; 
-  associatedStudents: number;
+  associatedStudents: number; // This might be less relevant for student view of a single training
   objective: string[]; 
   splits: TrainingSplit[]; 
-  imageUrl?: string; // New: For training card image
-  duration?: string; // New: For training card info (e.g., "58min")
-  calories?: string; // New: For training card info (e.g., "254kcal")
-  // "Sets" can be inferred from splits.length or total exercises for the card
+  imageUrl?: string; 
+  duration?: string; 
+  calories?: string; 
 }
 
 export interface NavItem {
